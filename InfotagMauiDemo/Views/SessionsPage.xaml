@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InfotagMauiDemo.Views.SessionsPage"
+             xmlns:models="clr-namespace:InfotagMauiDemo.Models"
+             xmlns:vm="clr-namespace:InfotagMauiDemo.ViewModels"
+             xmlns:views="clr-namespace:InfotagMauiDemo.Views"
+             x:DataType="vm:SessionsPageViewModel"
+             Title="Programm">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="breakTemplate">
+                <Border Stroke="White" StrokeThickness="1" Margin="5" Padding="5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5,5,5,5"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout x:DataType="models:Session" Margin="0,0,10,0" Padding="10">
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding Start}"/> <Label Text=" - "/> <Label Text="{Binding End}"/>
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding Title}" FontSize="Subtitle" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Border>
+            </DataTemplate>
+            <DataTemplate x:Key="sessionTemplate" x:DataType="models:Session">
+                <Border Stroke="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}" StrokeThickness="1" Margin="5" Padding="5">
+                     <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5,5,5,5"/>
+                    </Border.StrokeShape>
+                    <Grid RowDefinitions="auto, auto, auto" ColumnDefinitions="auto, *" Padding="10,0,10,0">
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Label Text="{Binding Start}" />  <Label Text=" - " /> <Label Text="{Binding End}"/>
+                        </HorizontalStackLayout>
+                        <Image Source="{Binding Speaker.Image}" Grid.RowSpan="3"
+                               WidthRequest="80" HeightRequest="80" Margin="0,0,10,0" >
+                            <Image.Clip>
+                                <EllipseGeometry Center="40,40"
+                                     RadiusX="40"
+                                     RadiusY="40" />
+                            </Image.Clip>
+                        </Image>
+
+                        <Label Text="{Binding Title}" Grid.Row="1" Grid.Column="1" FontSize="Subtitle" FontAttributes="Bold"/>
+                        <Label Text="{Binding Speaker.Name}" Grid.Row="2" Grid.Column="1" FontSize="Small" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SessionsPageViewModel}}, Path = NavigateToDetailsCommand }" CommandParameter="{Binding .}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+            <views:SessionDataTemplateSelector x:Key="sessionDataTemplateSelector"
+                                               SessionTemplate="{StaticResource sessionTemplate}"
+                                               BreakTemplate="{StaticResource breakTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <VerticalStackLayout BackgroundColor="#edeef7" Padding="10">
+
+                <Label Text="Programm" FontSize="Title" Margin="10,10,20,10"/>
+                <CollectionView ItemsSource="{Binding Sessions}" 
+                            ItemTemplate="{StaticResource sessionDataTemplateSelector}"/>
+
+        </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

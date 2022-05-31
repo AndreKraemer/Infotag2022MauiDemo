@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InfotagMauiDemo.Views.MainPage">
+			 
+    <ScrollView>
+        <VerticalStackLayout 
+            Spacing="20" 
+            Padding="20,0">
+
+            <Image
+                Source="logo.png"
+                SemanticProperties.Description="www.it-visions.de Logo"
+                HeightRequest="150"
+                HorizontalOptions="Center" />
+                
+            <Label 
+                Text="Infotag"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
+            
+            <Label 
+                Text="Softwareentwickler-Update 2022 für .NET-, Web- und Cloud-Entwickler: .NET 7"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Softwareentwickler-Update 2022 für dot net -, Web- und Cloud-Entwickler: dot net 7"
+                FontSize="18" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+ 
+</ContentPage>
